@@ -1,5 +1,5 @@
 import sqlite3
-from PyQt5 import QTableWidgetItem
+from PyQt5 import QTableWidgetItem, QMessageBox, QHeaderView
 
 conn = sqlite3.connect('users.db')
 cur = conn.cursor()
@@ -12,13 +12,41 @@ cur.execute("""CREATE TABLE IF NOT EXISTS users (
 conn.commit()
 
 def add_user(name, UZ, age, type_komand):
-    cur.execute('INSERT INTO users (name, UZ, age, type_komand) VALUES', (name, UZ, age, type_komand))
-    conn.commit()
+    if form.radioButton_profi.isChecked() or form.radioButton_osnova.isChecked():
+        if name != '' and UZ != '' and age != 0 and type_komand != '':
+            cur.execute('INSERT INTO users (name, UZ, age, type_komand) VALUES', (name, UZ, age, type_komand))
+            conn.commit()
+            check_massage()
+        else:
+            error_massage()
+    else:
+        error_massage()
+
+
+def error_massage():
+    msg = QMessageBox()
+    msg.setWindowTitle("Ошибка")
+    msg.setText("Введите правильные данные")
+    msg.setIcon(QMessageBox.Warning)
+    msg.exec_()
+
+
+def check_massage():
+    msg = QMessageBox()
+    msg.setWindowTitle("Добавление в БД")
+    msg.setText("Успешно!")
+    msg.setIcon(QMessageBox.Information)
+    msg.exec_()
+
 
 def remove_user(id):
-    id = int(id)
-    cur.execute('DELETE FROM users WHERE id = ?', (id,))
-    conn.commit()
+    try:
+        id = int(id)
+        cur.execute('DELETE FROM users WHERE id = ?', (id,))
+        conn.commit()
+    except:
+        error_massage()
+
 
 def update_table():
     form.tableWidget.setColumnCount(5)

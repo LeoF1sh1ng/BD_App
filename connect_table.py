@@ -10,12 +10,6 @@ cur.execute("""CREATE TABLE IF NOT EXISTS data_base (
                 OP TEXT)""")
 conn.commit()
 
-# def add_data(PU, PRO, OP):
-#     sPU = f'{PU[0]}, {PU[1]}, {PU[2]}'
-#     sPRO = f'{PRO[0]}, {PRO[1]}, {PRO[2]}'
-#     sOP = f'{OP[0]}, {OP[1]}'
-#     cur.execute('INSERT INTO data_base (PU, PRO, OP) VALUES (?, ?, ?)', (sPU, sPRO, sOP))
-
 def add_data_PU(PU):
     sPU = f'{PU[0]}, {PU[1]}, {PU[2]}'
     cur.execute('INSERT INTO data_base (PU) VALUES (?)', (sPU,))
@@ -46,7 +40,12 @@ def check_massage(x, y):
     msg.exec_()
 
 
-# def remove_user(id):
+def remove_data():
+    a = form.tableWidget.currentItem()
+    try:
+        id = int(a)
+        cur.execute('DELETE FROM data_base WHERE id =?', (id,))
+        conn.commit()
 
 
 

@@ -1,67 +1,67 @@
 import sqlite3
 from PyQt5 import QTableWidgetItem, QMessageBox, QHeaderView
 
-conn = sqlite3.connect('users.db')
+conn = sqlite3.connect('data_base.db')
 cur = conn.cursor()
-cur.execute("""CREATE TABLE IF NOT EXISTS users (
+cur.execute("""CREATE TABLE IF NOT EXISTS data_base (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT,
-                UZ TEXT,
-                age INTEGER,
-                type_komand TEXT)""")
+                PU TEXT,
+                PRO TEXT,
+                OP TEXT)""")
 conn.commit()
 
-def add_user(name, UZ, age, type_komand):
-    if form.radioButton_profi.isChecked() or form.radioButton_osnova.isChecked():
-        if name != '' and UZ != '' and age != 0 and type_komand != '':
-            cur.execute('INSERT INTO users (name, UZ, age, type_komand) VALUES', (name, UZ, age, type_komand))
-            conn.commit()
-            check_massage()
-        else:
-            error_massage()
-    else:
-        error_massage()
+# def add_data(PU, PRO, OP):
+#     sPU = f'{PU[0]}, {PU[1]}, {PU[2]}'
+#     sPRO = f'{PRO[0]}, {PRO[1]}, {PRO[2]}'
+#     sOP = f'{OP[0]}, {OP[1]}'
+#     cur.execute('INSERT INTO data_base (PU, PRO, OP) VALUES (?, ?, ?)', (sPU, sPRO, sOP))
+
+def add_data_PU(PU):
+    sPU = f'{PU[0]}, {PU[1]}, {PU[2]}'
+    cur.execute('INSERT INTO data_base (PU) VALUES (?)', (sPU,))
+
+def add_data_PRO(PRO):
+    sPRO = f'{PRO[0]}, {PRO[1]}, {PRO[2]}'
+    cur.execute('INSERT INTO data_base (PRO) VALUES (?)', (sPRO,))
+
+def add_data(OP):
+    sOP = f'{OP[0]}, {OP[1]}'
+    cur.execute('INSERT INTO data_base (OP) VALUES (?)', (sOP,))
 
 
-def error_massage():
+
+def error_massage(x, y):
     msg = QMessageBox()
-    msg.setWindowTitle("Ошибка")
-    msg.setText("Введите правильные данные")
+    msg.setWindowTitle(f"{x}")
+    msg.setText(f"{y}")
     msg.setIcon(QMessageBox.Warning)
     msg.exec_()
 
 
-def check_massage():
+def check_massage(x, y):
     msg = QMessageBox()
-    msg.setWindowTitle("Добавление в БД")
-    msg.setText("Успешно!")
+    msg.setWindowTitle(f"{x}")
+    msg.setText(f"{y}")
     msg.setIcon(QMessageBox.Information)
     msg.exec_()
 
 
-def remove_user(id):
-    try:
-        id = int(id)
-        cur.execute('DELETE FROM users WHERE id = ?', (id,))
-        conn.commit()
-    except:
-        error_massage()
+# def remove_user(id):
+
 
 
 def update_table():
-    form.tableWidget.setColumnCount(5)
+    form.tableWidget.setColumnCount(3)
     form.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-    form.tableWidget.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem('ID'))
-    form.tableWidget.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem('ФИО'))
-    form.tableWidget.setHorizontalHeaderItem(2, QtWidgets.QTableWidgetItem('Учебное Заведение'))
-    form.tableWidget.setHorizontalHeaderItem(3, QtWidgets.QTableWidgetItem('Возраст'))
-    form.tableWidget.setHorizontalHeaderItem(4, QtWidgets.QTableWidgetItem('Команда'))
+    form.tableWidget.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem('ПУ(x, y, дальность'))
+    form.tableWidget.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem('ПРО(x, y, радиус'))
+    form.tableWidget.setHorizontalHeaderItem(2, QtWidgets.QTableWidgetItem('ОП(x, y'))
     form.tableWidget.verticalHeader().setDefaultSectionSize(20)
     form.tableWidget.horizontalHeader().setDefaultSectionSize(60)
     form.tableWidget.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Fixed)
     form.tableWidget.horizontalHeader().setSectionResizeMode(3, QtWidgets.QHeaderView.Fixed)
 
-    bd = cur.execute('SELECT * FROM users').fetchall()
+    bd = cur.execute('SELECT * FROM data_base').fetchall()
     form.tableWidget.setRowCount(len(bd))
     for i in range(len(bd)):
         for j range(len(bd[i])):

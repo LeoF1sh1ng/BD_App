@@ -24,7 +24,7 @@ def add_data_PRO(PRO):
     sPRO = f'{PRO[0]}, {PRO[1]}, {PRO[2]}'
     cur.execute('INSERT INTO data_base (PRO) VALUES (?)', (sPRO,))
 
-def add_data(OP):
+def add_data_OP(OP):
     sOP = f'{OP[0]}, {OP[1]}'
     cur.execute('INSERT INTO data_base (OP) VALUES (?)', (sOP,))
 

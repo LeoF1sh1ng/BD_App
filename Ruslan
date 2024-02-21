@@ -21,18 +21,21 @@ conn.commit()
 def add_data_PU(PU):
     sPU = f'{PU[0]}, {PU[1]}, {PU[2]}'
     cur.execute('INSERT INTO data_base (PU) VALUES (?)', (sPU,))
+    update_table()
 
 form.D_PU.clicked.connect(lambda: add_data_PU([form.PU_X.text(), form.PU_Y.text(), form.PU_R.text()]))
 
 def add_data_PRO(PRO):
     sPRO = f'{PRO[0]}, {PRO[1]}, {PRO[2]}'
     cur.execute('INSERT INTO data_base (PRO) VALUES (?)', (sPRO,))
+    update_table()
 
 form.D_PRO.clicked.connect(lambda: add_data_PRO([form.PRO_X.text(), form.PRO_Y.text(), form.PRO_R.text()]))
 
 def add_data_OP(OP):
     sOP = f'{OP[0]}, {OP[1]}'
     cur.execute('INSERT INTO data_base (OP) VALUES (?)', (sOP,))
+    update_table()
 
 form.D_OP.clicked.connect(lambda: add_data_OP([form.OP_X.text(), form.OP_Y.text()]))
 
@@ -67,11 +70,12 @@ def check_massage(x, y):
 
 
 def update_table():
-    form.tableWidget.setColumnCount(3)
+    form.tableWidget.setColumnCount(4)
     form.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-    form.tableWidget.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem('ПУ(x, y, дальность'))
-    form.tableWidget.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem('ПРО(x, y, радиус'))
-    form.tableWidget.setHorizontalHeaderItem(2, QtWidgets.QTableWidgetItem('ОП(x, y'))
+    form.tableWidget.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem('ID'))
+    form.tableWidget.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem('ПУ(x, y, дальность'))
+    form.tableWidget.setHorizontalHeaderItem(2, QtWidgets.QTableWidgetItem('ПРО(x, y, радиус'))
+    form.tableWidget.setHorizontalHeaderItem(3, QtWidgets.QTableWidgetItem('ОП(x, y'))
     form.tableWidget.verticalHeader().setDefaultSectionSize(20)
     form.tableWidget.horizontalHeader().setDefaultSectionSize(60)
     form.tableWidget.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Fixed)

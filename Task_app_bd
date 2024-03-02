@@ -1,0 +1,33 @@
+import sqlite3
+
+# DATA = '2024-01-28' !!!
+
+conn = sqlite3.connect('tasks.db')
+cur = conn.cursor()
+cur.execute('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, '
+            'created_at DATETIME DEFAULT CURRENT_TIMESTAMP, '
+            'task TEXT, date DATE)')
+conn.commit()
+
+def add_task_bd_(task, date):
+    cur.execute('INSERT INTO tasks (task, date) VALUES (?, ?)', (task, date))
+    conn.commit()
+
+def del_task_bd(id):
+    cur.execute('DELETE FROM tasks WHERE id =?', (id,))
+    conn.commit()
+
+def sort_tasks_for_graph():
+    tasks_for_graph = cur.execute('SELECT date, COUNT(*) AS count_of_records FROM tasks'
+                                  'GROUP BY date'
+                                  'ORDER BY date').fetchall()
+    return tasks_for_graph
+
+def sort_tasks_for_list():
+    tasks_for_list = cur.execute('SELECT * FROM tasks'
+                                 'ORDER BY created_at').fetchall()
+    return tasks_for_list
+
+def update_task(task, date):
+    cur.execute('UPDATE tasks SET task =?, date =? WHERE id =?', (task, date, id))
+    conn.commit()

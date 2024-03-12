@@ -187,3 +187,47 @@ def delete_all_officers():
     cur.execute('DELETE FROM officers')
     conn.commit()
     print('Ok')
+
+
+
+### EDIT
+
+def edit_division(id, name):
+    cur.execute('UPDATE divisions SET name =? WHERE id =?', (name, id))
+    conn.commit()
+    print('Ok')
+
+def edit_cadet(id, parametr, update):
+    if parametr == '-f':
+        cur.execute('UPDATE cadets SET FirstName =? WHERE id =?', (update, id))
+        conn.commit()
+    elif parametr == '-m':
+        cur.execute('UPDATE cadets SET MiddleName =? WHERE id =?', (update, id))
+        conn.commit()
+    elif parametr == '-L':
+        cur.execute('UPDATE cadets SET LastName =? WHERE id =?', (update, id))
+        conn.commit()
+    elif parametr == 'd':
+        cur.execute('UPDATE cadets SET BithDate =? WHERE id =?', (update, id))
+    elif parametr == '-r':
+        cur.execute('UPDATE cadets SET Rank =? WHERE id =?', (update, id))
+    elif parametr == '-d':
+        cur.execute('UPDATE cadets SET Division =? WHERE id =?', (update, id))
+
+
+def edit_officer(id, parametr, update):
+    if parametr == '-f':
+        cur.execute('UPDATE officers SET FirstName =? WHERE id =?', (update, id))
+        conn.commit()
+    elif parametr == '-m':
+        cur.execute('UPDATE officers SET MiddleName =? WHERE id =?', (update, id))
+        conn.commit()
+    elif parametr == '-L':
+        cur.execute('UPDATE officers SET LastName =? WHERE id =?', (update, id))
+        conn.commit()
+    elif parametr == 'd':
+        cur.execute('UPDATE officers SET BithDate =? WHERE id =?', (update, id))
+    elif parametr == '-r':
+        cur.execute('UPDATE officers SET Rank =? WHERE id =?', (update, id))
+    elif parametr == '-d':
+        cur.execute('UPDATE officers SET Division =? WHERE id =?', (update, id))

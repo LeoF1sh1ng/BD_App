@@ -1,0 +1,140 @@
+import sqlite3
+
+conn = sqlite3.connect('database.db')
+cur = conn.cursor()
+cur.execute('CREATE TABLE IF NOT EXISTS divisions (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)')
+conn.commit()
+cur.execute('CREATE TABLE IF NOT EXISTS cadets (id INTEGER PRIMARY KEY AUTOINCREMENT, FirstName TEXT, MiddleName '
+            'TEXT, LastName TEXT, BirthDate DATE, Rank TEXT, Division INTEGER)')
+conn.commit()
+cur.execute('CREATE TABLE IF NOT EXISTS officer (id INTEGER PRIMARY KEY AUTOINCREMENT, FirstName TEXT, MiddleName '
+            'TEXT, LastName TEXT, BirthDate DATE, Rank TEXT, Division INTEGER)')
+conn.commit()
+
+###   ADD FUNCTIONS
+
+def add_division(name):
+    cur.execute('INSERT INTO divisions (name) VALUES (?)', (name,))
+    conn.commit()
+    print('Ok')
+
+
+def add_cadet(FirstName, MiddleName, LastName, BirthDate, Rank, Division):
+    cur.execute('INSERT INTO cadets (FirstName, MiddleName, LastName, BirthDate, Rank, Division) VALUES (?,?,?,?,?,?)',
+                (FirstName, MiddleName, LastName, BirthDate, Rank, Division))
+    conn.commit()
+    print('Ok')
+
+
+def add_officer(FirstName, MiddleName, LastName, BirthDate, Rank, Division):
+    cur.execute('INSERT INTO officer (FirstName, MiddleName, LastName, BirthDate, Rank, Division) VALUES (?,?,?,?,?,?)',
+                (FirstName, MiddleName, LastName, BirthDate, Rank, Division))
+    conn.commit()
+    print('Ok')
+
+###   LIST FUNCTIONS
+
+def list_divisions():
+    cur.execute('SELECT * FROM divisions')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Division: {Id: ' + row[0] + ', Name: ' + row[1] + '}}')
+
+def list_divisions_id():
+    cur.execute('SELECT * FROM divisions ORDER BY id')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Division: {Id: ' + row[0] + ', Name: ' + row[1] + '}}')
+
+def list_divisions_name():
+    cur.execute('SELECT * FROM divisions ORDER BY name')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Division: {Id: ' + row[0] + ', Name: ' + row[1] + '}}')
+
+
+
+
+
+def list_cadets():
+    cur.execute('SELECT * FROM cadets')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Cadet: {Id: ' + row[0] + ', Rank: ' + row[5] + ', FirstName: ' + row[1] + ', MiddleName: ' + row[
+            2] + ', LastName: ' + row[3] + ', BirthDate: ' + row[4] + + '}}')
+
+def list_cadets_id():
+    cur.execute('SELECT * FROM cadets ORDER BY id')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Cadet: {Id: ' + row[0] + ', Rank: ' + row[5] + ', FirstName: ' + row[1] + ', MiddleName: ' + row[
+            2] + ', LastName: ' + row[3] + ', BirthDate: ' + row[4] + + '}}')
+
+def list_cadets_LastName():
+    cur.execute('SELECT * FROM cadets ORDER BY LastName')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Cadet: {Id: ' + row[0] + ', Rank: ' + row[5] + ', FirstName: ' + row[1] + ', MiddleName: ' + row[
+            2] + ', LastName: ' + row[3] + ', BirthDate: ' + row[4] + + '}}')
+
+def list_cadets_div():
+    cur.execute('SELECT * FROM cadets ORDER BY Division')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Cadet: {Id: ' + row[0] + ', Rank: ' + row[5] + ', FirstName: ' + row[1] + ', MiddleName: ' + row[
+            2] + ', LastName: ' + row[3] + ', BirthDate: ' + row[4] + + '}}')
+
+def list_cadets_rank():
+    cur.execute('SELECT * FROM cadets ORDER BY Rank DESC')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Cadet: {Id: ' + row[0] + ', Rank: ' + row[5] + ', FirstName: ' + row[1] + ', MiddleName: ' + row[
+            2] + ', LastName: ' + row[3] + ', BirthDate: ' + row[4] + + '}}')
+
+
+
+
+
+
+def list_officers():
+    cur.execute('SELECT * FROM officers')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Officer: {Id:'+ row[0] + ', Rank:'+ row[5] + ', FirstName:'+ row[1] + ', MiddleName:'+ row[
+            2] + ', LastName:'+ row[3] + ', BirthDate:'+ row[4] + + '}}')
+
+def list_officers_id():
+    cur.execute('SELECT * FROM officers ORDER BY id')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Officer: {Id:'+ row[0] + ', Rank:'+ row[5] + ', FirstName:'+ row[1] + ', MiddleName:'+ row[
+            2] + ', LastName:'+ row[3] + ', BirthDate:'+ row[4] + + '}}')
+
+def list_officers_LastName():
+    cur.execute('SELECT * FROM officers ORDER BY LastName')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Officer: {Id:'+ row[0] + ', Rank:'+ row[5] + ', FirstName:'+ row[1] + ', MiddleName:'+ row[
+            2] + ', LastName:'+ row[3] + ', BirthDate:'+ row[4] + + '}}')
+
+def list_officer_div():
+    cur.execute('SELECT * FROM officers ORDER BY Division')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Officer: {Id:'+ row[0] + ', Rank:'+ row[5] + ', FirstName:'+ row[1] + ', MiddleName:'+ row[
+            2] + ', LastName:'+ row[3] + ', BirthDate:'+ row[4] + + '}}')
+
+def list_officers_rank():
+    cur.execute('SELECT * FROM officers ORDER BY Rank DESC')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Officer: {Id:'+ row[0] + ', Rank:'+ row[5] + ', FirstName:'+ row[1] + ', MiddleName:'+ row[
+            2] + ', LastName:'+ row[3] + ', BirthDate:'+ row[4] + + '}}')
+
+def list_officers_id():
+    cur.execute('SELECT * FROM officers ORDER BY id')
+    rows = cur.fetchall()
+    for row in rows:
+        print('{Officer: {Id:'+ row[0] + ', Rank:'+ row[5] + ', FirstName:'+ row[1] + ', MiddleName:'+ row[
+            2] + ', LastName:'+ row[3] + ', BirthDate:'+ row[4] + + '}}')
+

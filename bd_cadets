@@ -231,3 +231,28 @@ def edit_officer(id, parametr, update):
         cur.execute('UPDATE officers SET Rank =? WHERE id =?', (update, id))
     elif parametr == '-d':
         cur.execute('UPDATE officers SET Division =? WHERE id =?', (update, id))
+
+
+
+
+
+### LIST CADET BY '-PORYADOK'
+
+def list_cadets_by_p(parametr):
+    cur.execute('SELECT * FROM cadets')
+    rows = cur.fetchall()
+    print('{Cadet: {', end='')
+    for row in rows:
+        for p in parametr:
+            if p == 'i':
+                print(f'Id: {row[0]}', end=', ')
+            elif p == 'r':
+                print(f'Rank: {row[5]}', end=', ')
+            elif p == 'f':
+                print(f'FirstName: {row[1]}', end=', ')
+            elif p == 'm':
+                print(f'MiddleName: {row[2]}', end=', ')
+            elif p == 'l':
+                print(f'LastName: {row[3]}', end=', ')
+            elif p == 'b':
+                print(f'BirthDate: {row[4]}', end=', ')

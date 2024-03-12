@@ -138,3 +138,52 @@ def list_officers_id():
         print('{Officer: {Id:'+ row[0] + ', Rank:'+ row[5] + ', FirstName:'+ row[1] + ', MiddleName:'+ row[
             2] + ', LastName:'+ row[3] + ', BirthDate:'+ row[4] + + '}}')
 
+
+### DELETE
+def delete_division(id):
+    cur.execute('DELETE FROM divisions WHERE id =?', (id,))
+    conn.commit()
+    print('Ok')
+
+def delete_all_division():
+    cur.execute('DELETE FROM divisions')
+    conn.commit()
+    print('Ok')
+
+
+
+
+def delete_cadet(id):
+    cur.execute('DELETE FROM cadets WHERE id =?', (id,))
+    conn.commit()
+    print('Ok')
+
+def delete_cadet_division(division):
+    cur.execute('DELETE FROM cadets WHERE Division =?', (division,))
+    conn.commit()
+    print('Ok')
+
+def delete_cadet_OfficerID(OfficierID):
+    DivID = cur.execute('SELECT Division FROM officers WHERE id =?', (OfficierID,)).fetchall()[0]
+    cur.execute('DELETE FROM cadets WHERE Division =?', (DivID,))
+    conn.commit()
+    print('Ok')
+
+def delete_all_cadets():
+    cur.execute('DELETE FROM cadets')
+    conn.commit()
+    print('Ok')
+
+
+
+
+
+def delete_officer(id):
+    cur.execute('DELETE FROM officers WHERE id =?', (id,))
+    conn.commit()
+    print('Ok')
+    
+def delete_all_officers():
+    cur.execute('DELETE FROM officers')
+    conn.commit()
+    print('Ok')

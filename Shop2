@@ -1,0 +1,33 @@
+import sqlite3
+
+con = sqlite3.connect('database.db')
+cur = con.cursor()
+cur.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,'
+            'name TEXT,'
+            'last_name TEXT,'
+            'sur_name TEXT,'
+            'login TEXT'
+            'password TEXT)')
+con.commit()
+cur.execute('CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT,'
+            'name TEXT,'
+            'price INTEGER,'
+            'count INTEGER)')
+con.commit()
+cur.execute('CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY AUTOINCREMENT,'
+            'products_id TEXT,'
+            'counts TEXT)')
+con.commit()
+cur.execute('CREATE Table IF NOT EXISTS avt (boll INTEGER, id INTEGER)')
+
+def add_user(name, last_name, sur_name, login, password):
+    cur.execute('INSERT INTO users (name, last_name, sur_name, login, password) VALUES (?,?,?,?,?)',
+                (name, last_name, sur_name, login, password))
+    con.commit()
+
+def login(login, password):
+    lst = cur.execute('SELECT id, login, password FROM users').fetchall()
+    for i in lst:
+        if i[1] == login and i[2] == password:
+            return id
+    print('Такой учётной записи не существует, проверьте введёные логин и пароль или зарегестрируйтесь')

@@ -52,3 +52,10 @@ def delete_account():
             print('Отменено')
     else:
         print('Вы не вошли в учётную запись, войдите, чтобы удалить')
+
+def list():
+    for line in cur.execute('SELECT * FROM products').fetchall():
+        print(f'Наименование товара: {line[1]}\n'
+              f'Стоимость за 1 шт. {line[2]}\n'
+              f'Осталось на складе: {line[3]}')
+        print()

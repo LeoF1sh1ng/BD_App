@@ -39,7 +39,9 @@ def login(login, password):
         print('Такой учётной записи не существует, проверьте введёные логин и пароль или зарегестрируйтесь')
 
 def logout():
-    cur.execute('UPDATE avt SET (bool, id) WHERE login = TRUE VALUES (?,?)', (False, 0))
+    cur.execute('DELETE FROM avt')
+    con.commit()
+    cur.execute('INSERT INTO avt (bool, id) VALUES (?,?)', (False, 0))
     con.commit()
 
 def delete_account():

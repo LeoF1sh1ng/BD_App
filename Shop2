@@ -6,8 +6,10 @@ cur.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREM
             'name TEXT,'
             'last_name TEXT,'
             'sur_name TEXT,'
-            'login TEXT'
-            'password TEXT)')
+            'login TEXT,'
+            'password TEXT,'
+            'balance INTEGER'
+            'orders_id TEXT)')
 con.commit()
 cur.execute('CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT,'
             'name TEXT,'
@@ -15,8 +17,8 @@ cur.execute('CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINC
             'count INTEGER)')
 con.commit()
 cur.execute('CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY AUTOINCREMENT,'
-            'products_id TEXT,'
-            'counts TEXT)')
+            'products_id INTEGER,'
+            'counts INTEGER)')
 con.commit()
 cur.execute('CREATE Table IF NOT EXISTS avt (boll INTEGER, id INTEGER)')
 
@@ -39,7 +41,7 @@ def login(login, password):
 def logout():
     cur.execute('UPDATE avt SET (bool, id) WHERE login = TRUE VALUES (?,?)', (False, 0))
     con.commit()
-    
+
 def delete_account():
     avt = cur.execute('SELECT * FROM avt').fetchall()
     if avt[0][0] == True:
@@ -61,3 +63,27 @@ def list():
               f'Стоимость за 1 шт. {line[2]}\n'
               f'Осталось на складе: {line[3]}')
         print()
+
+def buy(name, count):
+    for line in cur.execute('SELECT * FROM products').fetchall():
+        if line[1] == name:
+            if line[3] >= count:
+                cur.execute('UPDATE products SET count = count -? WHERE id =?', (count, line[0]))
+                con.commit()
+                print(f'Вы купили {count} шт. товара {name}')
+            else:
+                print(f'Осталось на складе {line[3]} шт. товара {name}')
+            break
+    else:
+        print('Такой товар не существует')
+
+def add_balance(summary, id):
+    cur.execute('UPDATE users SET balance = balance +? WHERE id =?', (summary, 0))
+    con.commit()
+    print(f'Теперь ваш баланс: {cur.execute("SELECT balance FROM users WHERE id =?", (id,)).fetchall()[0][0]}')
+
+def status(id):
+    stat = cur.execute('SELECT * FROM users WHERE id =?', (id,))
+    print(f'ФИО: {stat[1]} {stat[2]} {stat[3]}\n'
+          f'Баланс: {stat[6]}'
+          f'Количество совершённых покупок: {len(stat[7].split())}')

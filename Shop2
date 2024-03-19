@@ -29,10 +29,12 @@ def login(login, password):
     lst = cur.execute('SELECT id, login, password FROM users').fetchall()
     for i in lst:
         if i[1] == login and i[2] == password:
-            cur.execute('UPDATE avt SET (bool, id) WHERE login = FALSE VALUES (?, ?)', (True, i[0]))
+            cur.execute('DELETE FROM avt')
             con.commit()
-            return
-    print('Такой учётной записи не существует, проверьте введёные логин и пароль или зарегестрируйтесь')
+            cur.execute('INSERT INTO avt (bool, id) VALUES (?,?)', (True, i[0]))
+            break
+    else:
+        print('Такой учётной записи не существует, проверьте введёные логин и пароль или зарегестрируйтесь')
 
 def logout():
     cur.execute('UPDATE avt SET (bool, id) WHERE login = TRUE VALUES (?,?)', (False, 0))

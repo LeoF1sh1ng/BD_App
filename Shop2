@@ -29,5 +29,26 @@ def login(login, password):
     lst = cur.execute('SELECT id, login, password FROM users').fetchall()
     for i in lst:
         if i[1] == login and i[2] == password:
-            return id
+            cur.execute('UPDATE avt SET (bool, id) WHERE login = FALSE VALUES (?, ?)', (True, i[0]))
+            con.commit()
+            return
     print('Такой учётной записи не существует, проверьте введёные логин и пароль или зарегестрируйтесь')
+
+def logout():
+    cur.execute('UPDATE avt SET (bool, id) WHERE login = TRUE VALUES (?,?)', (False, 0))
+    con.commit()
+    
+def delete_account():
+    avt = cur.execute('SELECT * FROM avt').fetchall()
+    if avt[0][0] == True:
+        print('Вы уверены, что хотите удалить учётную запись?')
+        print('Введите "Да" для да, "Нет" для нет')
+        ans = input()
+        if ans == 'Да':
+            cur.execute('DELETE FROM users WHERE id =?', (avt[0][1],))
+            con.commit()
+            print('Учётная запись удалена')
+        else:
+            print('Отменено')
+    else:
+        print('Вы не вошли в учётную запись, войдите, чтобы удалить')

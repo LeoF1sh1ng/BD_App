@@ -8,7 +8,7 @@ cur.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREM
             'sur_name TEXT,'
             'login TEXT,'
             'password TEXT,'
-            'balance INTEGER'
+            'balance INTEGER,'
             'orders_id TEXT)')
 con.commit()
 cur.execute('CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT,'

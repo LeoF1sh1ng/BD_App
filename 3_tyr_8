@@ -1,0 +1,42 @@
+import PyQt5.QtGui
+from PyQt5 import uic, QtWidgets, QtGui, QtCore
+from PyQt5.QtWidgets import QApplication, QGraphicsEllipseItem, QGraphicsLineItem
+from PyQt5.QtGui import QPainter
+import pyqtgraph as pg
+import pyqtgraph.examples
+import turtle
+
+Form, Window = uic.loadUiType('untitled.ui')
+# pyqtgraph.examples.run()
+app = QApplication([])
+form = Form()
+window = Window()
+form.setupUi(window)
+window.show()
+window.setFixedSize(700,700)
+
+plt1 = pg.plot()
+plt1.setBackground('w')
+plt1.getPlotItem().hideAxis('bottom')
+plt1.getPlotItem().hideAxis('left')
+form.verticalLayout.addWidget(plt1)
+
+def pizza_add(d, count_people):
+    circle = QGraphicsEllipseItem(0 - (d/2),0 - (d/2),d,d)
+    circle.setBrush(pg.mkBrush((255,255,0)))
+    circle.setPen(pg.mkPen((255,255,0)))
+    plt1.addItem(circle)
+    f = 360 / count_people
+    a = 0
+    for i in range(count_people):
+        line = QGraphicsLineItem(0, 0, 0, d/2)
+        line.setPen(pg.mkPen(width=2, color='black'))
+        line.setRotation(a)
+        plt1.addItem(line)
+        a += f
+pizza_add(9,11)
+
+
+
+
+app.exec()

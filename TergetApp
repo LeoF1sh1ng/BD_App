@@ -21,3 +21,9 @@ def lider_bord():
     for i in range(len(lst)):
         row_scores += str(lst[i][2]) + '\n'
     return [row_name, row_scores]
+
+def create_lst():
+    tlst = []
+    for i in range(5):
+        tlst.append([random.randint(-500, 500)/100, random.randint(-500, 500)/100])
+    return tlst
